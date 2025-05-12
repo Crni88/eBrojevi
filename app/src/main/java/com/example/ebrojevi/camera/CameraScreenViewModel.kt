@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class CameraScreenViewModel : ViewModel() {
+class CameraScreenViewModel() : ViewModel() {
     private val _state = MutableStateFlow(CameraScreenState())
     val state: StateFlow<CameraScreenState> = _state
 
@@ -29,7 +29,6 @@ class CameraScreenViewModel : ViewModel() {
                 val result = textRecognizer.process(input).await()
                 _state.update {
                     it.copy(
-                        //isLoading = false,
                         displayedText = "Extracting text...",
                         recognizedText = result.text,
                         lastBitmap = bitmap
@@ -41,6 +40,7 @@ class CameraScreenViewModel : ViewModel() {
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        displayedText = "Unable to extract text...",
                         recognizedText = "Error: ${e.localizedMessage}",
                         lastBitmap = bitmap
                     )
