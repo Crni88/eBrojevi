@@ -1,6 +1,6 @@
 package com.example.ebrojevi.di
 
-import com.example.ebrojevi.camera.CameraScreenViewModel
+import com.example.ebrojevi.ui.camera.CameraScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

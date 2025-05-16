@@ -1,4 +1,4 @@
-package com.example.ebrojevi.camera
+package com.example.ebrojevi.ui.camera
 
 import android.graphics.Bitmap
 
@@ -7,5 +7,6 @@ data class CameraScreenState(
     val isLoading: Boolean = false,
     val displayedText: String = "",
     val lastBitmap: Bitmap? = null,
-
-    )
+    val navigateToLoadingScreen: Boolean = false,
+    val queryString: String = "",
+)

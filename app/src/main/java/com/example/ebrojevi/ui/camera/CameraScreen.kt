@@ -1,4 +1,4 @@
-package com.example.ebrojevi.camera
+package com.example.ebrojevi.ui.camera
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -30,12 +30,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlashlightOff
 import androidx.compose.material.icons.filled.FlashlightOn
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -58,6 +56,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import com.example.ebrojevi.navigation.Routes
+import com.example.ebrojevi.ui.components.eNumbersLoader
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
@@ -67,13 +68,19 @@ import java.util.concurrent.TimeUnit
 //TODO This needs to be further optimized and refactored. This is only a prototype!
 @Composable
 fun CameraScreenRoot(
-    viewModel: CameraScreenViewModel = koinViewModel()
+    viewModel: CameraScreenViewModel = koinViewModel(),
+    navController: NavHostController
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     CameraScreen(
         state = state,
         onImageCaptured = viewModel::processImage
     )
+
+    if (state.navigateToLoadingScreen) {
+        navController.navigate(Routes.loadingRoute(state.queryString))
+        viewModel.resetNavigationState()
+    }
 }
 
 @OptIn(ExperimentalGetImage::class)
@@ -142,9 +149,7 @@ fun CameraScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.size(250.dp))
-            Spacer(modifier = Modifier.height(50.dp))
-            Text(state.displayedText)
+            eNumbersLoader(state.displayedText)
         } else {
             Box(
                 Modifier

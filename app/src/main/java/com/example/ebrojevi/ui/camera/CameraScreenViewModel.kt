@@ -1,7 +1,6 @@
-package com.example.ebrojevi.camera
+package com.example.ebrojevi.ui.camera
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.mlkit.vision.common.InputImage
@@ -31,11 +30,11 @@ class CameraScreenViewModel() : ViewModel() {
                     it.copy(
                         displayedText = "Extracting text...",
                         recognizedText = result.text,
-                        lastBitmap = bitmap
+                        lastBitmap = bitmap,
+                        navigateToLoadingScreen = true,
+                        queryString = getQueryString(result.text)
                     )
                 }
-                val listOfExtractedNumbers = extractENumbersFromTheText(state.value.recognizedText)
-                Log.d("EStringLogger", listOfExtractedNumbers.toString())
             } catch (e: Exception) {
                 _state.update {
                     it.copy(
@@ -49,10 +48,19 @@ class CameraScreenViewModel() : ViewModel() {
         }
     }
 
-    private fun extractENumbersFromTheText(inputValue: String): List<String> {
+    private fun getQueryString(inputValue: String): String {
         val pattern = Regex("""\bE\d{3}[a-zA-Z]?\b""")
         return pattern.findAll(inputValue)
-            .map { it.value }
-            .toList()
+            .joinToString("/") { it.value }
+    }
+
+    fun resetNavigationState() {
+        _state.update {
+            it.copy(
+                navigateToLoadingScreen = false,
+                isLoading = false,
+                recognizedText = "",
+            )
+        }
     }
 }

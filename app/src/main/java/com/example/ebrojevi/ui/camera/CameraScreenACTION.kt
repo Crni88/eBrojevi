@@ -1,4 +1,4 @@
-package com.example.ebrojevi.camera
+package com.example.ebrojevi.ui.camera
 
 
 //TODO Add actions
