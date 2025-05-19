@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.ebrojevi.additives.presentation.FoodAdditivesScreenRoot
+import com.example.ebrojevi.navigation.Routes.ADDITIVES_ROUTE
 import com.example.ebrojevi.navigation.Routes.CAMERA_ROUTE
 import com.example.ebrojevi.ui.camera.CameraScreenRoot
 import com.example.ebrojevi.ui.loading.LoadingScreenRoot
@@ -16,6 +18,9 @@ fun eNumbersNavHost() {
     NavHost(navController = navController, startDestination = CAMERA_ROUTE) {
         composable(CAMERA_ROUTE) {
             CameraScreenRoot(navController = navController)
+        }
+        composable(ADDITIVES_ROUTE) {
+            FoodAdditivesScreenRoot(navController = navController)
         }
         composable(
             route = "${Routes.LOADING_ROUTE}/{queryString}",

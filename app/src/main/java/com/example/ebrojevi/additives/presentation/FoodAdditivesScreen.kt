@@ -31,12 +31,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.ebrojevi.additives.domain.model.FoodAdditive
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FoodAdditivesScreenRoot(
     viewModel: FoodAdditivesViewModel = koinViewModel(),
+    navController: NavHostController,
 ) {
     val state by viewModel.state.collectAsState()
     FoodAdditivesScreen(state)
