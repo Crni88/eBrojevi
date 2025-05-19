@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.ebrojevi.additives.presentation.FoodAdditivesScreenRoot
 import com.example.ebrojevi.navigation.eNumbersNavHost
 import com.example.ebrojevi.ui.theme.EBrojeviTheme
 
@@ -20,6 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             EBrojeviTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    FoodAdditivesScreenRoot()
+//                    CameraScreenRoot()
                     eNumbersNavHost()
                 }
             }
